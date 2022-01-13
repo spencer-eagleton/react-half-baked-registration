@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { signInUser, signUpUser } from '../services/users';
 import './Auth.css';
 import classNames from 'classnames';
-export default function Auth() {
+
+export default function Auth({ setCurrentUser }) {
   const [type, setType] = useState('signin');
   const [errorMessage, setErrorMessage] = useState('');
   const [email, setEmail] = useState('');
@@ -13,10 +14,10 @@ export default function Auth() {
     try {
       const resp =
         type === 'signin' ? await signInUser(email, password) : await signUpUser(email, password);
-      await signInUser(email, password);
-      console.log(resp);
+
+      setCurrentUser(resp);
     } catch {
-      setErrorMessage('error. invalid login, dummy.');
+      setErrorMessage('error. invalid login.');
     }
   };
   return (
@@ -41,6 +42,7 @@ export default function Auth() {
       </div>
 
       <h1>Type: {type}</h1>
+      <p>{errorMessage}</p>
       <AuthForm
         errorMessage={errorMessage}
         email={email}

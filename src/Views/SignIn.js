@@ -9,8 +9,7 @@ export default function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const resp = await signInUser(email, password);
-      console.log(resp);
+      await signInUser(email, password);
     } catch {
       setErrorMessage('error. invalid login, dummy.');
     }
